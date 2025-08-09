@@ -1,175 +1,194 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>DJ Jan Kowalski — DJ & Producer</title>
-  <meta name="description" content="DJ Jan Kowalski — energetyczne sety, imprezy, eventy. Skontaktuj się i zarezerwuj termin." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#07060a;
-      --accent:#00e6ff;
-      --accent-2:#b400ff;
-      --muted:#9aa0a6;
-      --glass: rgba(255,255,255,0.04);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJ Example</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: white;
+}
+
+/* Sekcja główna */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.burger {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Płyta winylowa */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 50px 20px;
+    flex-wrap: wrap;
+}
+
+.vinyl {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #333 30%, #000 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    animation: spin 5s linear infinite;
+}
+
+.vinyl::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    background: red;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Skaczące kreseczki */
+.bars {
+    display: flex;
+    gap: 4px;
+    margin-top: 20px;
+}
+
+.bar {
+    width: 5px;
+    height: 20px;
+    background: lime;
+    animation: bounce 0.5s ease-in-out infinite;
+}
+
+.bar:nth-child(2) { animation-delay: 0.1s; }
+.bar:nth-child(3) { animation-delay: 0.2s; }
+.bar:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes bounce {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+}
+
+/* Sekcje */
+section {
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+section:nth-child(even) {
+    background: #222;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+/* Mobilne */
+@media (max-width: 768px) {
+    nav {
+        display: none;
+        flex-direction: column;
+        background: #222;
+        padding: 10px;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      font-family: 'Montserrat', system-ui;
-      background: var(--bg);
-      color:#e8eef6;
-      overflow-x:hidden;
+    nav.active {
+        display: flex;
     }
-    .hero{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
-      padding:48px 24px;
+    .burger {
+        display: block;
     }
-    canvas.particles{
-      position:fixed;
-      inset:0;
-      z-index:0;
-      pointer-events:none;
+    .hero {
+        flex-direction: column;
+        text-align: center;
     }
-    .container{
-      position:relative;
-      z-index:2;
-      max-width:1100px;
-      display:grid;
-      grid-template-columns: 420px 1fr;
-      gap:32px;
-      align-items:center;
-    }
-    @media (max-width:900px){
-      .container{grid-template-columns:1fr; text-align:center}
-      .vinyl{margin:0 auto;}
-    }
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.04);
-      padding:28px;
-      border-radius:18px;
-      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
-      backdrop-filter: blur(6px);
-    }
-    .vinyl-wrap{display:flex;justify-content:center;padding:10px;}
-    .vinyl{
-      width:260px;
-      height:260px;
-      border-radius:50%;
-      background:conic-gradient(from 0deg, #000 0 40%, rgba(40,40,40,1) 40% 60%, #000 60% 100%);
-      display:grid;place-items:center;
-      box-shadow: inset 0 -30px 40px rgba(0,0,0,0.6), 0 12px 30px rgba(0,0,0,0.6);
-      transform:scale(.6) rotate(-12deg);
-      opacity:0;
-      will-change: transform;
-    }
-    .vinyl::after{
-      content:'';
-      width:70%;height:70%;border-radius:50%;
-      background: radial-gradient(circle at 40% 35%, #111 0 10%, #0b0b0b 11% 40%, rgba(0,0,0,0.6) 40%);
-    }
-    .label{
-      position:absolute;
-      width:64px;height:64px;
-      border-radius:50%;
-      background:linear-gradient(180deg,var(--accent), var(--accent-2));
-      display:flex;align-items:center;justify-content:center;
-      color:#081018;font-weight:900;font-size:14px;
-    }
-    .spin{animation: spin 6s linear infinite;}
-    @keyframes spin{to { transform: rotate(360deg) }}
-    h1{
-      font-size:36px;font-weight:900;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      -webkit-background-clip:text;color:transparent;
-    }
-    p.lead{color:var(--muted);font-weight:500}
-    .buttons{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;justify-content:center}
-    .btn{
-      padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;
-      color:inherit;background:var(--glass)
-    }
-    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#031018;border:none;}
-    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
-    @keyframes fadeUp {
-      from { opacity:0; transform: translateY(18px) scale(.98) }
-      to   { opacity:1; transform: translateY(0) scale(1) }
-    }
-    .reveal{animation:fadeUp 700ms forwards}
-  </style>
+}
+</style>
 </head>
 <body>
-  <div class="hero">
-    <canvas class="particles"></canvas>
-    <div class="container">
-      <div class="card reveal">
-        <div class="vinyl-wrap">
-          <div class="vinyl" id="vinyl">
-            <div class="label">JK</div>
-          </div>
+
+<header>
+    <div class="logo">DJ Example</div>
+    <div class="burger" onclick="document.querySelector('nav').classList.toggle('active')">☰</div>
+    <nav>
+        <a href="#o-mnie">O mnie</a>
+        <a href="#oferta">Oferta</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#kontakt">Kontakt</a>
+    </nav>
+</header>
+
+<div class="hero">
+    <div>
+        <div class="vinyl"></div>
+        <div class="bars">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
-        <h1>DJ Jan Kowalski</h1>
-        <p class="lead">Energetyczne sety | Eventy | Clubmixy</p>
-        <div class="buttons">
-          <a class="btn primary" id="bookBtn">Zarezerwuj termin</a>
-          <a class="btn" id="listenBtn">Posłuchaj próbki</a>
-        </div>
-        <footer>Kontakt: <strong>jan.kowalski@email.pl</strong> • Tel: <strong>+48 123 456 789</strong></footer>
-      </div>
     </div>
-  </div>
-  <script>
-    window.addEventListener('load', () => {
-      const vinyl = document.getElementById('vinyl');
-      setTimeout(()=>{
-        vinyl.style.transform = 'scale(1) rotate(0deg)';
-        vinyl.style.opacity = '1';
-        setTimeout(()=> vinyl.classList.add('spin'), 900);
-      }, 220);
-    });
-    (function(){
-      const canvas = document.querySelector('canvas.particles');
-      const ctx = canvas.getContext('2d');
-      let w, h, particles=[];
-      function resize(){
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight;
-      }
-      function random(min,max){return Math.random()*(max-min)+min}
-      function createParticles(){
-        particles = [];
-        const count = Math.round((window.innerWidth*window.innerHeight)/90000);
-        for(let i=0;i<count;i++){
-          particles.push({x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3, r: random(0.6,2.2), hue: random(170,290), life: random(120, 320)});
-        }
-      }
-      function step(){
-        ctx.clearRect(0,0,w,h);
-        for(let p of particles){
-          p.x += p.vx; p.y += p.vy; p.life -= 1;
-          if(p.life<=0 || p.x<0 || p.x>w || p.y<0 || p.y>h){p.x = Math.random()*w; p.y = Math.random()*h; p.life = random(120, 320);}
-          ctx.beginPath();
-          const g = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*6);
-          g.addColorStop(0, `hsla(${p.hue},100%,60%,0.18)`);
-          g.addColorStop(0.6, `hsla(${p.hue},90%,50%,0.06)`);
-          g.addColorStop(1, `rgba(10,10,12,0)`);
-          ctx.fillStyle = g;
-          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-          ctx.fill();
-        }
-        requestAnimationFrame(step);
-      }
-      window.addEventListener('resize', ()=>{ resize(); createParticles(); });
-      resize(); createParticles(); step();
-    })();
-  </script>
+    <div>
+        <h1>Twój DJ na każdą okazję</h1>
+        <p>Profesjonalna oprawa muzyczna na wesela, imprezy firmowe i prywatne eventy.</p>
+    </div>
+</div>
+
+<section id="o-mnie">
+    <h2>O mnie</h2>
+    <p>Jestem DJ-em z wieloletnim doświadczeniem, który potrafi rozkręcić każdą imprezę. Muzyka to moja pasja i sposób na życie.</p>
+</section>
+
+<section id="oferta">
+    <h2>Oferta</h2>
+    <p>Wesele, impreza firmowa, urodziny – dobiorę muzykę idealnie do klimatu wydarzenia. Posiadam własny sprzęt nagłośnieniowy i oświetleniowy.</p>
+</section>
+
+<section id="galeria">
+    <h2>Galeria</h2>
+    <p>Zdjęcia z moich eventów już wkrótce!</p>
+</section>
+
+<section id="kontakt">
+    <h2>Kontakt</h2>
+    <p>Email: kontakt@djexample.pl</p>
+    <p>Telefon: 123 456 789</p>
+</section>
+
 </body>
 </html>
