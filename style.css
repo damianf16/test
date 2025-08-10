@@ -47,8 +47,7 @@ body {
 
 /* card with vinyl */
 .card {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border: 1px solid rgba(255,255,255,0.04);
+    background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.01));
     padding: 28px;
     border-radius: 18px;
     display: flex;
@@ -192,10 +191,9 @@ p.lead {
 
 /* small info panel */
 .info {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.01));
     border-radius: 12px;
-    padding: 18px; 
-    border: 1px solid rgba(255,255,255,0.03);
+    padding: 18px;
     display: flex;
     flex-direction: column;
     gap: 10px;
