@@ -204,7 +204,8 @@ p.lead {
 .socials {
     display: flex;
     gap: 12px;
-    align-items: center
+    align-items: center;
+    justify-content: center;
 }
 
 .socials a {
